@@ -34,11 +34,13 @@ This function will be created:
 ```javascript
 (function($) {
 
-  namespace.for.my.templates.mustache['javascripts/my_template'] = render;
+  #{@namespace}.mustache['#{@template_name}'] = {
+    template: "#{@template_string}",
+    render: render
+  };
 
-  function render(obj) {
-    var template = "{{name}}: <ul> {{#items}}<li>{{.}}</li>{{/items}} </ul>"";
-    return Mustache.to_html(template, obj);
+  function render(obj, partials) {
+    return Mustache.to_html(#{@namespace}.mustache['#{@template_name}'].template, obj, partials);
   }
 }(jQuery));
 ```
@@ -48,9 +50,13 @@ This function will be created:
 Which means in your code you can call:
 
 ```javascript
-  namespace.for.my.templates.mustache['javascripts/my_template']({
+  namespace.for.my.templates.mustache['javascripts/my_template'].render({
     name: "George",
     items: ["Judy", "Jane", "Elroy", "Astro"]
   });
 ```
 
+## Versions
+
+### 0.0.2
+- Added ability to use mustache partials
