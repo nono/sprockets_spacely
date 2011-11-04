@@ -16,11 +16,13 @@ module Sprockets
           js_function = <<-JS
 (function($) {
 
-  #{@namespace}.mustache['#{@template_name}'] = render;
+  #{@namespace}.mustache['#{@template_name}'] = {
+    template: "#{@template_string}",
+    render: render
+  };
 
-  function render(obj) {
-    var template = "#{@template_string}";
-    return Mustache.to_html(template, obj);
+  function render(obj, partials) {
+    return Mustache.to_html(#{@namespace}.mustache['#{@template_name}'].template, obj, partials);
   }
 }(jQuery));
           JS
