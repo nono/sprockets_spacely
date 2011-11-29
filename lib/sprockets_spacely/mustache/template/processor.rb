@@ -12,10 +12,10 @@ module Sprockets
         end
 
         def evaluate(scope, locals, &block)
-
           namespace = Namespace.value || "window"
+          library = Library.value || "jQuery"
 
-          Generator.new(namespace, scope.logical_path, escape_javascript(data)).generate
+          Generator.new(namespace, scope.logical_path, escape_javascript(data), library).generate
         end
       end
     end

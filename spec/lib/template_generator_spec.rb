@@ -5,6 +5,7 @@ describe Sprockets::Mustache::Template::Generator do
   let :generator do
 
     namespace = "my.Namespace"
+    library = "Zepto"
     logical_path = "javascripts/backbone/templates/mustache/entryList"
     template_string = <<-HTML
 <table class="ledger">
@@ -20,7 +21,7 @@ describe Sprockets::Mustache::Template::Generator do
 </table>
     HTML
 
-    Sprockets::Mustache::Template::Generator.new(namespace, logical_path, template_string)
+    Sprockets::Mustache::Template::Generator.new(namespace, logical_path, template_string, library)
   end
 
   it "calculates the template name" do
@@ -38,6 +39,10 @@ describe Sprockets::Mustache::Template::Generator do
 
     it "assigns the correct namespace" do
       @js.should match(/my\.Namespace\.mustache\['javascripts\/backbone\/templates\/mustache\/entryList'\] = \{/)
+    end
+
+    it "assigns the correct library" do
+      @js.should match(/}\(Zepto\)/)
     end
 
     it "puts the template in the mustache object" do

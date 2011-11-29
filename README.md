@@ -14,9 +14,10 @@ We assume that you are requiring jQuery and Mustache.js higher up in your Sprock
 
 ```ruby
 Sprockets::Mustache::Template::Namespace.value = 'namespace.for.my.templates'
+Sprockets::Mustache::Template::Library.value = 'Zepto'
 ```
 
-This will take any *.mustache file under Sprockets' paths and generate a closure that sets a function that evaluates your template.
+This will take any `*.mustache` file under Sprockets' paths and generate a closure that sets a function that evaluates your template.
 
 File: "app/assets/javascripts/my_template.mustache"
 
@@ -42,7 +43,7 @@ This function will be created:
   function render(obj, partials) {
     return Mustache.to_html(#{@namespace}.mustache['#{@template_name}'].template, obj, partials);
   }
-}(jQuery));
+}(#{@library}));
 ```
 
 ...which Sprockets will add to the appropriate JavaScript asset bundle.
